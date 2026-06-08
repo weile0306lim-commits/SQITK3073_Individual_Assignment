@@ -18,6 +18,9 @@ for stock_name, ticker in stocks.items():
                       start="2026-05-01",
                       end="2026-06-01",
                       progress = False)
+    
+    filename = "bursa_1month_data.csv"
+    data.to_csv(filename, index=True)
 
     #Yesterday closing price
     yesterday_close = data["Close"].iloc[-2].item()
@@ -40,12 +43,12 @@ for stock_name, ticker in stocks.items():
     results.append({
         "Stock": stock_name,
         "Ticker": ticker,
-        "Previous Closing Price": round(yesterday_close, 2),
-        "Latest Closing Price": round(today_close, 2),
-        "Daily Return": round(daily_return, 2),
+        "Previous Closing Price (RM)": round(yesterday_close, 2),
+        "Latest Closing Price (RM)": round(today_close, 2),
+        "Daily Return (RM)": round(daily_return, 2),
         "Shares Purchasable with RM1000": round(shares, 2),
-        "Estimated Total Return": round(estimated_return, 2),
-        "Return Percentage": round(return_percentage, 2)
+        "Estimated Total Return (RM)": round(estimated_return, 2),
+        "Return Percentage (%)": round(return_percentage, 2)
     })
 
 df = pd.DataFrame(results)
