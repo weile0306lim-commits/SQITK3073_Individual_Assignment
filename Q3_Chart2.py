@@ -6,7 +6,7 @@ df = pd.read_csv("stock_analysis.csv")
 colors = []
 
 #Chart2: Portfolio Performance Comparison
-for value in df["Return Percentage"]:
+for value in df["Return Percentage (%)"]:
     if value < 0:
         colors.append("red")
     else:
@@ -15,14 +15,14 @@ for value in df["Return Percentage"]:
 plt.figure(figsize=(10, 6))
 
 plt.bar(df["Stock"],
-        df["Return Percentage"],
+        df["Return Percentage (%)"],
         color=colors)
 
 plt.title("Return Percentage Comparison of Selected Bursa Malaysia Stocks")
 plt.xlabel("Stock")
 plt.ylabel("Return Percentage (%)")
 
-for i, value in enumerate(df["Return Percentage"]):
+for i, value in enumerate(df["Return Percentage (%)"]):
     plt.text(
         i, 
         value, 
