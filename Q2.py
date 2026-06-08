@@ -5,12 +5,11 @@ df = pd.read_csv("stock_analysis.csv")
 
 #Question 2(a): Data Filtering Using Pandas Slicing
 portfolio_summary = df.loc[:,[
-    "Stock",
     "Ticker",
-    "Previous Closing Price",
-    "Latest Closing Price",
-    "Estimated Total Return",
-    "Return Percentage"
+    "Previous Closing Price (RM)",
+    "Latest Closing Price (RM)",
+    "Estimated Total Return (RM)",
+    "Return Percentage (%)"
     ]
 ]
 
@@ -27,18 +26,17 @@ def classify_performance(return_percentage):
     else:
         return "High Return"
     
-df["Performance Category"] = df["Return Percentage"].apply(classify_performance)
+df["Performance Category"] = df["Return Percentage (%)"].apply(classify_performance)
 print("\nPORTFOLIO PERFORMANCE CATEGORIES")
 print(df[
     [
-        "Stock",
         "Ticker", 
-        "Return Percentage", 
+        "Return Percentage (%)", 
         "Performance Category"
         ]
 ])
 
 #GroupBy analysis
-group_summary = df.groupby("Performance Category")["Estimated Total Return"].mean().reset_index()
+group_summary = df.groupby("Performance Category")["Estimated Total Return (RM)"].mean().reset_index()
 print("\nGROUP BY SUMMARY")
 print(group_summary)
