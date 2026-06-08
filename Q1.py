@@ -10,6 +10,7 @@ stocks = {
 }
 
 results = []
+all_data=[]
 
 for stock_name, ticker in stocks.items():
    
@@ -19,8 +20,22 @@ for stock_name, ticker in stocks.items():
                       end="2026-06-01",
                       progress = False)
     
-    filename = "bursa_1month_data.csv"
-    data.to_csv(filename, index=True)
+      # Flatten MultiIndex columns
+    if isinstance(data.columns, pd.MultiIndex):
+        data.columns = data.columns.get_level_values(0)
+    
+    data = data.reset_index()
+
+    # Rename index column to Date if needed
+    if "index" in data.columns:
+        data = data.rename(columns={"index": "Date"})
+
+    data = data[["Date", "Open", "High", "Low", "Close", "Volume"]]
+
+    data["Stock"]=stock_name
+    data["Ticker"] = ticker
+
+    all_data.append(data)
 
     #Yesterday closing price
     yesterday_close = data["Close"].iloc[-2].item()
@@ -51,6 +66,11 @@ for stock_name, ticker in stocks.items():
         "Return Percentage (%)": round(return_percentage, 2)
     })
 
+#Save raw 1 month data to CSV for all stocks
+raw_data =pd.concat(all_data, ignore_index=True)
+raw_data.to_csv("bursa_1month_data.csv", index=False)
+
+#Save analysis results to CSV
 df = pd.DataFrame(results)
 print(df)
 df.to_csv("stock_analysis.csv", index=False)
