@@ -14,12 +14,12 @@ for value in df["Return Percentage (%)"]:
 
 plt.figure(figsize=(10, 6))
 
-plt.bar(df["Stock"],
+plt.bar(df["Ticker"],
         df["Return Percentage (%)"],
         color=colors)
 
 plt.title("Return Percentage Comparison of Selected Bursa Malaysia Stocks")
-plt.xlabel("Stock")
+plt.xlabel("Ticker")
 plt.ylabel("Return Percentage (%)")
 
 for i, value in enumerate(df["Return Percentage (%)"]):
